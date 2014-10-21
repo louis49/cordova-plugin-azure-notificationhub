@@ -43,8 +43,23 @@
     self.userId = [command.arguments objectAtIndex:3];
     self.callbackId = command.callbackId;
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+    UIUserNotificationType UserNotificationTypes = UIUserNotificationTypeNone;
+    UserNotificationTypes |= UIUserNotificationTypeBadge;
+    UserNotificationTypes |= UIUserNotificationTypeSound;
+    UserNotificationTypes |= UIUserNotificationTypeAlert;
+    UserNotificationTypes |= UIUserNotificationActivationModeBackground;
     
+    if ([[UIApplication sharedApplication]respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UserNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+    }
+#else
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+#endif
 }
 
 - (void)unregisterApplication:(CDVInvokedUrlCommand*)command
@@ -77,6 +92,7 @@
     NSArray* categories1 = [NSArray arrayWithObject: self.userId];
     
     NSSet* categories = [[NSSet alloc] initWithArray:categories1];
+    
 
     [hub registerNativeWithDeviceToken:deviceToken tags:categories completion:^(NSError* error) {
         if (error != nil) {
