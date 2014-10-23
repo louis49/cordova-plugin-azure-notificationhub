@@ -30,10 +30,6 @@ public class NotificationHub extends CordovaPlugin {
      * The callback context from which we were invoked.
      */
     protected static CallbackContext _callbackContext = null;
-    public static final int NOTIFICATION_ID = 1;
-private NotificationManager mNotificationManager;
-NotificationCompat.Builder builder;
-Context ctx;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -125,7 +121,10 @@ Context ctx;
      * Handles push notifications received.
      */
     public static class PushNotificationReceiver extends android.content.BroadcastReceiver {
-
+	public static final int NOTIFICATION_ID = 1;
+	private NotificationManager mNotificationManager;
+	NotificationCompat.Builder builder;
+	Context ctx;
         @Override
         public void onReceive(Context context, Intent intent) {
             
