@@ -13,6 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.microsoft.windowsazure.messaging.NativeRegistration;
 
@@ -25,6 +30,10 @@ public class NotificationHub extends CordovaPlugin {
      * The callback context from which we were invoked.
      */
     protected static CallbackContext _callbackContext = null;
+    public static final int NOTIFICATION_ID = 1;
+private NotificationManager mNotificationManager;
+NotificationCompat.Builder builder;
+Context ctx;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -136,8 +145,24 @@ public class NotificationHub extends CordovaPlugin {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-        
+            
+	           mNotificationManager = (NotificationManager)
+	              ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+	
+		    PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
+		          new Intent(ctx, MainActivity.class), 0);
+		
+		    NotificationCompat.Builder mBuilder =
+		          new NotificationCompat.Builder(ctx)
+		          .setSmallIcon(R.drawable.ic_launcher)
+		          .setContentTitle("Notification Hub Demo")
+		          .setStyle(new NotificationCompat.BigTextStyle()
+		                     .bigText(msg))
+		          .setContentText(msg);
+		
+		     mBuilder.setContentIntent(contentIntent);
+		     mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+	   }
     }
     
     /**
