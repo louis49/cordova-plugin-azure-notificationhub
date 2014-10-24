@@ -180,8 +180,7 @@ public class NotificationHub extends CordovaPlugin {
 		int defaults = Notification.DEFAULT_ALL;
 		
 		//Intent resultIntent = new Intent(context, ResultActivity.class);
-        PackageManager pm = context.getPackageManager();
-        Intent resultIntent = pm.getLaunchIntentForPackage(context.getPackageName());
+        Intent resultIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
 		// Because clicking the notification opens a new ("special") activity, there's
 		// no need to create an artificial back stack.
 		PendingIntent resultPendingIntent =
