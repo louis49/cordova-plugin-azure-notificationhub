@@ -20,6 +20,7 @@ import android.app.PendingIntent;
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -126,26 +127,6 @@ public class NotificationHub extends CordovaPlugin {
         }
     }
     
-    public class ResultActivity extends Activity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
-        String message = getIntent().getStringExtra(CommonConstants.EXTRA_MESSAGE);
-        TextView text = (TextView) findViewById(R.id.result_message);
-        text.setText(message);
-    }
-    public void onSnoozeClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), PingService.class);
-        intent.setAction(CommonConstants.ACTION_SNOOZE);
-        startService(intent);
-    }
-    public void onDismissClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), PingService.class);
-        intent.setAction(CommonConstants.ACTION_DISMISS);
-        startService(intent);
-    }
-}
     /**
      * Handles push notifications received.
      */
@@ -169,9 +150,9 @@ public class NotificationHub extends CordovaPlugin {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+		Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();
 		// Extract the payload from the message
-		Bundle extras = intent.getExtras();
+		/*Bundle extras = intent.getExtras();
 		if (extras != null)
 		{
 		// if we are in the foreground, just surface the payload, else post it to the statusbar
@@ -185,7 +166,7 @@ public class NotificationHub extends CordovaPlugin {
                 // Send a notification if there is a message
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
                     createNotification(context, extras);
-                }
+                }*/
             }
         }
 	
