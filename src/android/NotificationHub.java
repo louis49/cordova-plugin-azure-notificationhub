@@ -177,7 +177,7 @@ public class NotificationHub extends CordovaPlugin {
 		// no need to create an artificial back stack.
 		PendingIntent resultPendingIntent =
 		    PendingIntent.getActivity(
-		    this,
+		    context,
 		    0,
 		    resultIntent,
 		    PendingIntent.FLAG_UPDATE_CURRENT
