@@ -150,7 +150,7 @@ public class NotificationHub extends CordovaPlugin {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-		Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();
+		//Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();
 		
 		// Extract the payload from the message
 		Bundle extras = intent.getExtras();
@@ -165,21 +165,23 @@ public class NotificationHub extends CordovaPlugin {
 		extras.putBoolean("foreground", false);
 
                 // Send a notification if there is a message
-                //if (extras.getString("message") != null && extras.getString("message").length() != 0) {
-                //    createNotification(context, extras);
-                //}
+                if (extras.getString("message") != null && extras.getString("message").length() != 0) {
+                    createNotification(context, extras);
+                }
             }
         }
 	
 
-	/*public void createNotification(Context context, Bundle extras)
+	public void createNotification(Context context, Bundle extras)
 	{
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		String appName = getAppName(context);
 
 		int defaults = Notification.DEFAULT_ALL;
 		
-		Intent resultIntent = new Intent(context, ResultActivity.class);
+		//Intent resultIntent = new Intent(context, ResultActivity.class);
+        PackageManager pm = getPackageManager();
+        Intent resultIntent = pm.getLaunchIntentForPackage(getApplicationContext().getPackageName());
 		// Because clicking the notification opens a new ("special") activity, there's
 		// no need to create an artificial back stack.
 		PendingIntent resultPendingIntent =
@@ -195,7 +197,7 @@ public class NotificationHub extends CordovaPlugin {
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
-				//.setContentIntent(resultPendingIntent)
+				.setContentIntent(resultPendingIntent)
 				.setTicker(extras.getString("title"))
 				.setAutoCancel(true);
 
@@ -220,9 +222,8 @@ public class NotificationHub extends CordovaPlugin {
 					.getApplicationLabel(context.getApplicationInfo());
 		
 		return (String)appName;
-	}*/
-    }
-    
+	}
+   }
     /**
      * Returns plugin callback.
      */
