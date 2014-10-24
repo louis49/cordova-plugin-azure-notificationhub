@@ -188,7 +188,7 @@ public class NotificationHub extends CordovaPlugin {
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
-				setContentIntent(resultPendingIntent);
+				.setContentIntent(resultPendingIntent);
 				.setTicker(extras.getString("title"))
 				.setAutoCancel(true);
 
