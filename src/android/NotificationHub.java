@@ -167,7 +167,7 @@ public class NotificationHub extends CordovaPlugin {
 
 	public void createNotification(Context context, Bundle extras)
 	{
-		NotificationManager mNotificationManager = (NotificationManager) cordova.getActivity().getSystemService("NOTIFICATION_SERVICE");
+		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		String appName = getAppName(context);
 
 		int defaults = Notification.DEFAULT_ALL;
