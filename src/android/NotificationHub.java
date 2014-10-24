@@ -172,7 +172,7 @@ public class NotificationHub extends CordovaPlugin {
         }
 	
 
-	public void createNotification(Context context, Bundle extras)
+	/*public void createNotification(Context context, Bundle extras)
 	{
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		String appName = getAppName(context);
@@ -220,7 +220,7 @@ public class NotificationHub extends CordovaPlugin {
 					.getApplicationLabel(context.getApplicationInfo());
 		
 		return (String)appName;
-	}
+	}*/
     }
     
     /**
