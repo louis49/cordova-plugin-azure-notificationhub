@@ -17,6 +17,9 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Activity;
+import android.view.View;
+import android.widget.TextView;
 
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +27,8 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.microsoft.windowsazure.messaging.NativeRegistration;
+
+
 
 /**
  * Apache Cordova plugin for Windows Azure Notification Hub
@@ -121,6 +126,26 @@ public class NotificationHub extends CordovaPlugin {
         }
     }
     
+    public class ResultActivity extends Activity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+        String message = getIntent().getStringExtra(CommonConstants.EXTRA_MESSAGE);
+        TextView text = (TextView) findViewById(R.id.result_message);
+        text.setText(message);
+    }
+    public void onSnoozeClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), PingService.class);
+        intent.setAction(CommonConstants.ACTION_SNOOZE);
+        startService(intent);
+    }
+    public void onDismissClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), PingService.class);
+        intent.setAction(CommonConstants.ACTION_DISMISS);
+        startService(intent);
+    }
+}
     /**
      * Handles push notifications received.
      */
