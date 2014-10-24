@@ -171,13 +171,24 @@ public class NotificationHub extends CordovaPlugin {
 		String appName = getAppName(context);
 
 		int defaults = Notification.DEFAULT_ALL;
-
+		
+		Intent resultIntent = new Intent(this, ResultActivity.class);
+		// Because clicking the notification opens a new ("special") activity, there's
+		// no need to create an artificial back stack.
+		PendingIntent resultPendingIntent =
+		    PendingIntent.getActivity(
+		    this,
+		    0,
+		    resultIntent,
+		    PendingIntent.FLAG_UPDATE_CURRENT
+		);
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
 				.setDefaults(defaults)
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
+				setContentIntent(resultPendingIntent);
 				.setTicker(extras.getString("title"))
 				.setAutoCancel(true);
 
