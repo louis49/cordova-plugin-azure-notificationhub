@@ -151,8 +151,9 @@ public class NotificationHub extends CordovaPlugin {
                 e.printStackTrace();
             }
 		Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();
+		
 		// Extract the payload from the message
-		/*Bundle extras = intent.getExtras();
+		Bundle extras = intent.getExtras();
 		if (extras != null)
 		{
 		// if we are in the foreground, just surface the payload, else post it to the statusbar
@@ -164,9 +165,9 @@ public class NotificationHub extends CordovaPlugin {
 		extras.putBoolean("foreground", false);
 
                 // Send a notification if there is a message
-                if (extras.getString("message") != null && extras.getString("message").length() != 0) {
-                    createNotification(context, extras);
-                }*/
+                //if (extras.getString("message") != null && extras.getString("message").length() != 0) {
+                //    createNotification(context, extras);
+                //}
             }
         }
 	
@@ -178,7 +179,7 @@ public class NotificationHub extends CordovaPlugin {
 
 		int defaults = Notification.DEFAULT_ALL;
 		
-		/*Intent resultIntent = new Intent(context, ResultActivity.class);
+		Intent resultIntent = new Intent(context, ResultActivity.class);
 		// Because clicking the notification opens a new ("special") activity, there's
 		// no need to create an artificial back stack.
 		PendingIntent resultPendingIntent =
@@ -187,7 +188,7 @@ public class NotificationHub extends CordovaPlugin {
 		    0,
 		    resultIntent,
 		    PendingIntent.FLAG_UPDATE_CURRENT
-		);*/
+		);
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
 				.setDefaults(defaults)
