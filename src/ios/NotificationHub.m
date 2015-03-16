@@ -94,7 +94,7 @@
     NSSet* categories = [[NSSet alloc] initWithArray:categories1];
     
 
-    [hub registerNativeWithDeviceToken:deviceToken tags:categories completion:^(NSError* error) {
+    [hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
         if (error != nil) {
             [self failWithError:error];
             return;
